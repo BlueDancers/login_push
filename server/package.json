@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "pm2 start app.js --watch",
+    "checking": "pm2 logs app [--lines 3000]",
+    "stop": "pm2 stop all"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "koa2": "^2.0.0-alpha.7",
+    "mongoose": "^5.2.13",
+    "pm2": "^3.0.4"
+  }
+}
