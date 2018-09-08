@@ -1,15 +1,56 @@
 const user = require('../schema/UserSchema')
 
-user.then( (user)=> {
-  user.create({
-    id: 1,
-    username: 'admin',
-    password: '$2a$10$x3f0Y2SNAmyAfqhKVAV.7uE7RHs3FDGuSYw.LlZhOFoyK7cjfZ.Q6'
-  }, (err) => {
-    if (err) {
-      console.log('插入失败',err);
-    } else {
-      console.log('插入成功');
-    }
+let addUser = (username, password) => {
+  return user.then( (user)=> {
+    return new Promise((resolve, reject) => {
+      user.findOne({username}, (err, callback)=> {
+        if (err) {
+          reject('数据库内部出错')
+        } else {
+          if (!callback) { // 查询不到说明不存在该用户
+            user.create({
+              username,
+              password
+            }, (err) => {
+              if (err) {
+                reject('数据无法插入')
+              } else {
+                resolve('注册成功')
+              }
+            })
+          } else {
+            resolve('该用户已经存在')
+          }
+        }
+      })
+    })
+      
   })
-})
+}
+
+let verifyUser = (username, password) => {
+  return user.then((user) => {
+    return new Promise((resolve, reject) => {
+      user.findOne({ username }, (err, data) => {
+        if (err) {
+          reject('数据库内部出错')
+        } else {
+          if (data) { // 不存在即为{} 存在 {_id: .., username: ...,password: ....}
+            if (password === data.password) {
+              resolve('登录成功')
+            } else {
+              resolve('密码错误')
+            }
+          } else {
+            resolve('用户不存在')
+          }
+        }
+      })
+    })
+  })
+}
+
+module.exports = {
+  addUser,
+  verifyUser
+}

@@ -1,5 +1,6 @@
 const Router = require('koa-router')
 const router = new Router()
+const UserController = require('../controllers/UserController')
 
 
 
@@ -7,12 +8,12 @@ router.get('/', (ctx)=> {
   ctx.body = '路由测试'
 })
 
-router.get('/login', (ctx) => {
-  ctx.body = '登录接口'
-})
+router.post('/register', UserController.addUser)
+
+router.post('/login', UserController.verifyUser)
 
 router.get('/getList', (ctx)=> {
-  ctx.body = "todolist接口"
+  ctx.body = "todolist接口" 
 })
 
 module.exports = router
