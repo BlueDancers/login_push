@@ -16,4 +16,6 @@ router.get('/getList', (ctx)=> {
   ctx.body = "todolist接口" 
 })
 
+
+router.use('/api', router.routes())
 module.exports = router
