@@ -4,6 +4,7 @@ let host = 'localhost'
 let port = 27017
 
 let config =  {
-  DBuser: `mongodb://${host}:${port}/user`,
-  DBList: `mongodb://${host}:${port}/List`
+  DB: `mongodb://${host}:${port}/todoList`
 }
+
+module.exports = config
