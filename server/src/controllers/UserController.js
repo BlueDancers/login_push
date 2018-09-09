@@ -1,5 +1,6 @@
 const user = require('../models/UserModels')
 const jwt = require('jsonwebtoken')
+const config = require('../config/config')
 const md5 = require('md5')
 // 密码使用md5加密存储
 
@@ -30,10 +31,9 @@ let verifyUser = async (ctx, next) => {
   await user.verifyUser(username, password)
   .then((data)=> {
     // 处理token  
-    let secretOrPrivateKey = 'private' // 对于私钥这个参数,是用来加密解密的凭据
     let token = jwt.sign({
       username
-    }, secretOrPrivateKey, {
+    }, config.secretOrPublicKey, {
       expiresIn: 60 * 60 * 24 // 24小时过期
     })
     console.log(token);
@@ -51,7 +51,35 @@ let verifyUser = async (ctx, next) => {
   })
 }
 
+// 验证
+let verification = async (ctx, next) => {
+  let { token } = ctx.request.body
+  try {
+    await jwt.verify(token, config.secretOrPublicKey, (err, decoded)=> {
+      if (err) {
+        ctx.body = {
+          data: '登录信息失效',
+          type: 0 
+        }
+        return
+      }
+      if (decoded) {
+        ctx.body = {
+          type: 1
+        }
+      }
+    })
+  } catch (error) {
+    ctx.body = {
+      data: '登录信息出错',
+      type: 0
+    }
+  }
+  
+}
+
 module.exports = {
   addUser,
-  verifyUser
+  verifyUser,
+  verification
 }
