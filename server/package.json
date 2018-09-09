@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2 start app.js --watch",
-    "checking": "pm2 logs app [--lines 3000]",
+    "c": "pm2 logs app [--lines 3000]",
     "stop": "pm2 stop all",
     "delete": "pm2 delete 0"
   },

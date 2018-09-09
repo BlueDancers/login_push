@@ -15,11 +15,11 @@ let addUser = (username, password) => {
               if (err) {
                 reject('数据无法插入')
               } else {
-                resolve('注册成功')
+                resolve('注册成功,请登录')
               }
             })
           } else {
-            resolve('该用户已经存在')
+            reject('该用户已经存在')
           }
         }
       })
@@ -39,10 +39,10 @@ let verifyUser = (username, password) => {
             if (password === data.password) {
               resolve('登录成功')
             } else {
-              resolve('密码错误')
+              reject('密码错误')
             }
           } else {
-            resolve('用户不存在')
+            reject('用户不存在')
           }
         }
       })

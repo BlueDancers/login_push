@@ -8,7 +8,7 @@ router.get('/', (ctx)=> {
   ctx.body = '路由测试'
 })
 
-router.post('/register', UserController.addUser)
+router.post('/regist', UserController.addUser)
 
 router.post('/login', UserController.verifyUser)
 

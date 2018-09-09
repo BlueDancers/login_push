@@ -11,13 +11,13 @@ let addUser =  async (ctx, next) => {
   .then((data)=> {
     ctx.body = {
       data,
-      code: 1
+      type: 1
     }
   })
   .catch((data)=> {
     ctx.body = {
       data,
-      code: 0
+      type: 0 // 有毛病 type字段我定于或者不定义 都是type:1 莫名其妙
     }
   })
 }
@@ -40,15 +40,13 @@ let verifyUser = async (ctx, next) => {
     ctx.body = {
       data,
       token,
-      code: 1
+      type: 1
     }
   })
   .catch((data) => {
-    console.log("失败哦了");
-    
     ctx.body = {
       data,
-      code: 0
+      type: 0
     }
   })
 }
