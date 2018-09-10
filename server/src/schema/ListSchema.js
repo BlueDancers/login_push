@@ -8,12 +8,15 @@ module.exports = getConnect(config.DB)
 
     let List = new Schema({
       user_id: {
-        type: Number
-      },
-      content: { // 文本信息
         type: String
       },
-      status: { // 状态
+      event_id: {
+        type: Number
+      },
+      event: { // 文本信息
+        type: String
+      },
+      date: { // 状态
         type: String
       }
     })

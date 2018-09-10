@@ -72,26 +72,18 @@ export default {
     let token = localStorage.getItem('token')
     let Payload = jwt.decode(token)
     this.username = Payload.username // 解密用户名
+    this._id = Payload.id
+    this.getData()
   },
   data() {
     return {
-      event: '',
-      username: '',
-      activeName: 'first',
-      tableData: [
-        {
-          eId: 1,
-          date: '2018-1-1',
-          event: 'jsonwebtoken'
-        },
-        {
-          eId: 2,
-          date: '2018-1-2',
-          event: '深复制'
-        }
-      ],
-      completeData: [],
-      selectEvent: []
+      event: '', // 增加的事件
+      username: '', // 用户名
+      _id: '', // 用户id
+      activeName: 'first', // 初始表圈
+      tableData: [],// 全部事件
+      completeData: [], // 已完成事件
+      selectEvent: [] // 多选操作
     }
   },
   computed: {
@@ -111,34 +103,57 @@ export default {
     }
   },
   methods: {
-    handleEdit(index, row) {
+
+    handleEdit(index, row) { // 点击完成
+
       // 点击完成
       //index 表格位置  row 行信息
       this.tableData.map((element, index) => {
-        if (element.eId === row.eId) {
+        if (element.event_id === row.event_id) {
           this.tableData.splice(index, 1) // 删除等待完成事项
         }
       })
-      this.completeData.push(row) // 加入已经完成的事项
+      this.completeData.unshift(row) // 加入已经完成的事项
     },
-    selectAll() {
-      // 多选暂时不写
+
+    selectAll() { // 多选暂时不写
+      this.selectEvent = []
       arguments[0].map(e => {
         this.selectEvent.push(e.eId)
       })
       console.log(this.selectEvent)
     },
-    addData() {
-      console.log();
+    getData () { // 获取事件
+      this.$axios.get(`/api/getTodoList?id=${this._id}`)
+      .then((data) => {
+        console.log(data.data.data);
+
+        this.tableData = data.data.data
+      })
+      .catch((data) => {
+        this.$message.error(data)
+      })
+    },
+    addData() { // 添加事件
       let event  = {
+        id: this._id,
         date: this.getNowFormatDate(),
         event: this.event,
       }
-      // this.$axios.post('/api/addTodoList', event)
-      // .then((data) => {
-      //   console.log(data);
-      // })
+      this.$axios.post('/api/addTodoList', event)
+      .then((data) => {
+        this.$message({
+          message: data.data.data,
+          type: 'success'
+        })
+        this.event = ''
+        this.getData()
+      })
+      .catch((data) => {
+        this.$message.error(data)
+      })
     },
+    //格式化时间
     getNowFormatDate() {
       var date = new Date()
       var month = date.getMonth() + 1

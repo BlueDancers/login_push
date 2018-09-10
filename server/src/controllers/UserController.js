@@ -30,15 +30,16 @@ let verifyUser = async (ctx, next) => {
   
   await user.verifyUser(username, password)
   .then((data)=> {
+    let {text, id} = data
     // 处理token  
     let token = jwt.sign({
-      username
+      username,
+      id
     }, config.secretOrPublicKey, {
       expiresIn: 60 * 60 * 24 // 24小时过期
     })
-    console.log(token);
     ctx.body = {
-      data,
+      text,
       token,
       type: 1
     }
@@ -75,8 +76,9 @@ let verification = async (ctx, next) => {
       type: 0
     }
   }
-  
 }
+
+
 
 module.exports = {
   addUser,

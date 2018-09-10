@@ -2,7 +2,9 @@ const user = require('../schema/UserSchema')
 
 let addUser = (username, password) => {
   return user.then( (user)=> {
+
     return new Promise((resolve, reject) => {
+      
       user.findOne({username}, (err, callback)=> {
         if (err) {
           reject('数据库内部出错')
@@ -30,14 +32,20 @@ let addUser = (username, password) => {
 
 let verifyUser = (username, password) => {
   return user.then((user) => {
+
     return new Promise((resolve, reject) => {
+
       user.findOne({ username }, (err, data) => {
         if (err) {
           reject('数据库内部出错')
         } else {
           if (data) { // 不存在即为{} 存在 {_id: .., username: ...,password: ....}
             if (password === data.password) {
-              resolve('登录成功')
+              console.log(data);
+              resolve({
+                text: '登陆成功',
+                id: data._id
+              })
             } else {
               reject('密码错误')
             }

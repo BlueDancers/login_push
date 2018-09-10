@@ -41,7 +41,7 @@ import axios from 'axios';
           if (data.data.type === 1){ // 状态为1 说明 登录成功
 
             this.$message({
-              message: data.data.data,
+              message: data.data.text,
               type: 'success'
             })
 
