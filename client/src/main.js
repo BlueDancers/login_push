@@ -9,7 +9,12 @@ import {
   Select,
   Input,
   Message,
-  Alert
+  Alert,
+  Tabs,
+  TabPane,
+  Table,
+  TableColumn,
+  Icon
 } from 'element-ui'
 
 Vue.config.productionTip = false
@@ -22,7 +27,11 @@ Vue.use(Row)
 Vue.use(Col)
 Vue.use(Input)
 Vue.use(Alert)
-
+Vue.use(Tabs)
+Vue.use(TabPane)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Icon)
 router.beforeEach((to, from, next) => {
   let token = localStorage.getItem('token') // 获取token
 
