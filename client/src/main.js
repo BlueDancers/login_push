@@ -14,13 +14,19 @@ import {
   TabPane,
   Table,
   TableColumn,
-  Icon
+  Icon,
+  Notification,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
 } from 'element-ui'
 
 Vue.config.productionTip = false
 
-Vue.prototype.$message = Message
 Vue.prototype.$axios = axios
+Vue.prototype.$message = Message
+Vue.prototype.$notify = Notification
+
 Vue.use(Button)
 Vue.use(Select)
 Vue.use(Row)
@@ -32,6 +38,12 @@ Vue.use(TabPane)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Icon)
+Vue.use(Dropdown)
+Vue.use(DropdownMenu)
+Vue.use(DropdownItem)
+
+
+
 router.beforeEach((to, from, next) => {
   let token = localStorage.getItem('token') // 获取token
 
@@ -41,7 +53,7 @@ router.beforeEach((to, from, next) => {
       if (data.data.type) { // type 为1 直接跳过登录
         Message({
           showClose: true,
-          message: '您已经登录,重新登录请退出账户'
+          message: '欢迎回来'
         });
         next('/todolist')
       } else {

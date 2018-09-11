@@ -8,9 +8,9 @@ let addList = (id, date, event) => {
         if (!callback.length) { // 第一次添加
           list.create({
               user_id: id,
-              event_id: 0,
               event,
-              date
+              date,
+              status: true
           }, ((err) => {
             if (err) {
               reject('添加失败' + err)
@@ -21,9 +21,9 @@ let addList = (id, date, event) => {
         } else {
           list.create({
             user_id: id,
-            event_id: callback.length,
             event,
-            date
+            date,
+            status: true
           }, ((err) => {
             if (err) {
               reject('添加失败' + err)
@@ -41,7 +41,8 @@ let getList = (id)=> {
   return mongo.then((list) => {
     return new Promise((resolve, reject) => {
       list.find({
-        user_id: id
+        user_id: id,
+        status: true
       }, (err, callback) => {
         if (err) {
           console.log("错误" + err);
@@ -54,9 +55,85 @@ let getList = (id)=> {
   })
 }
 
+let fulfilList = (id) => {
+  return mongo.then((list) => {
+    console.log(id);
+    return new Promise((resolve, reject) => {
+      list.updateOne({
+            _id: id
+          }, {
+            status: false
+          }, (err, callback) => {
+        if (err) {
+          reject('数据更新失败')
+        }
+        if (callback) {
+          resolve('数据已更新')
+        }
+      })
+    })
+  })
+}
 
+let getfulfilList = (id) => {
+  return mongo.then((list) => {
+    return new Promise((resolve, reject) => {
+      list.find({
+        user_id: id,
+        status: false
+      }, (err, callback) => {
+        if (err) {
+          console.log("错误" + err);
+          reject(err)
+        } else {
+          resolve(callback)
+        }
+      })
+    })
+  })
+}
+
+let cancelList = (id)=> {
+  return mongo.then((list) => {
+    return new Promise((resolve, reject) => {
+      list.updateOne({
+        _id: id
+      }, {
+        status: true
+      }, (err, callback) => {
+        if (err) {
+          reject('数据更新失败')
+        }
+        if (callback) {
+          resolve('数据已撤销到待完成')
+        }
+      })
+    })
+  })
+}
+
+let deleteList = (id) => {
+  return mongo.then((list) => {
+    return new Promise((resolve, reject) => {
+      list.deleteOne({
+        event_id: id
+      }, (err, callback) => {
+        if (err) {
+          reject('数据更新失败')
+        }
+        if (callback) {
+          resolve('数据已删除')
+        }
+      })
+    })
+  })
+}
 
 module.exports = {
   addList,
-  getList
+  getList,
+  fulfilList,
+  getfulfilList,
+  cancelList,
+  deleteList
 }

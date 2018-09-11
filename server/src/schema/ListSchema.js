@@ -10,14 +10,14 @@ module.exports = getConnect(config.DB)
       user_id: {
         type: String
       },
-      event_id: {
-        type: Number
-      },
       event: { // 文本信息
         type: String
       },
-      date: { // 状态
+      date: { // 事件
         type: String
+      },
+      status: {
+        type: Boolean
       }
     })
 
