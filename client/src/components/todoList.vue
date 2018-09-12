@@ -29,7 +29,7 @@
                   </el-table-column>
                 </el-table>
               </el-col>
-              <el-button v-show="isSeleData" size="mini" class="wbutton" type="primary">多选完成</el-button>
+              <el-button v-show="isSeleData" @click="updateDataAll" size="mini" class="wbutton" type="primary">多选完成</el-button>
 
               <el-col v-show="!isTable">
                 暂无事件
@@ -39,7 +39,7 @@
 
           <el-tab-pane label="已完成事项" style="width:100%">
             <el-col v-show="isComplete">
-              <el-table :data="completeData" style="width: 100%"  @select-all="selectAll">
+              <el-table :data="completeData" style="width: 100%"  @select-all="selectfulfilAll">
                 <el-table-column type='selection' align="center">
                 </el-table-column>
                 <el-table-column label="日期" align="center">
@@ -64,8 +64,8 @@
                   <i class="el-icon-arrow-down el-icon--right"></i>
                   </el-button>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>撤销</el-dropdown-item>
-                  <el-dropdown-item>删除</el-dropdown-item>
+                  <el-dropdown-item @click.native="muchcancel">撤销</el-dropdown-item>
+                  <el-dropdown-item @click.native="muchDalete">删除</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             <el-col v-show="!isComplete">
@@ -98,7 +98,7 @@ export default {
       tableData: [],// 全部事件
       completeData: [], // 已完成事件
       selectEvent: [], // 多选操作
-      isSelefulfilData: false
+      selectfulfilEvent: []
     }
   },
   computed: {
@@ -117,9 +117,14 @@ export default {
       }
     },
     isSeleData () {
-      console.log(this.selectEvent);
-
       if (this.selectEvent.length) {
+        return true
+      } else {
+        return false
+      }
+    },
+    isSelefulfilData () {
+       if (this.selectfulfilEvent.length) {
         return true
       } else {
         return false
@@ -158,20 +163,24 @@ export default {
       this.selectEvent = selection
     },
 
+    selectfulfilAll (selectfulfilEvent) {  // 全选操作
+      this.selectfulfilEvent = selectfulfilEvent
+    },
+
     select (selection, row) { // 多选操作 // 下一步 发送给后端
       this.selectEvent = selection
     },
+
     getData () { // 获取待完成事件
       this.$axios.get(`/api/getTodoList?id=${this._id}`)
       .then((data) => {
-        console.log(data.data.data);
-
         this.tableData = data.data.data
       })
       .catch((data) => {
         this.$message.error(data)
       })
     },
+
     getfulfilData() { // 获取已完成事件
       this.$axios.get(`/api/getfulfilTodoList?id=${this._id}`)
       .then((data) => {
@@ -181,6 +190,7 @@ export default {
         this.$message.error(data)
       })
     },
+
     addData() { // 添加事件
       let event  = {
         id: this._id,
@@ -200,6 +210,7 @@ export default {
         this.$message.error(data)
       })
     },
+
     Cancel (index,row) { // 撤销事件
       this.$axios.post('/api/cancelTodoList', {
         id: row._id
@@ -216,9 +227,10 @@ export default {
         this.$message.error(data)
       })
     },
-    Delete (index, row) {
+
+    Delete (index, row) { // 删除事件
       this.$axios.post('/api/deleteTodoList', {
-        id: row.event_id
+        id: row._id
       })
       .then((data) => {
         this.$notify({
@@ -230,6 +242,80 @@ export default {
       .catch((data) => {
         console.log(data);
       })
+    },
+    updateDataAll () {
+      this.updateAll(this.selectEvent)
+      .then((id) => {
+        this.$axios.post('/api/updateDatas',{
+          id
+        })
+        .then((data) => {
+          this.$notify({
+            title: data.data.data,
+            type: 'success'
+          })
+
+        })
+        .then(() => {
+          this.getfulfilData()
+          this.getData()
+          this.selectEvent = []
+        })
+        .catch((data) => {
+          console.log(data);
+        })
+      })
+    },
+    muchcancel () {
+      this.updateAll(this.selectfulfilEvent)
+      .then((id) => {
+        this.$axios.post('/api/cancelFulfilData',{
+          id
+        })
+        .then((data) => {
+          this.$notify({
+            title: data.data.data,
+            type: 'success'
+          })
+        })
+        .then(() => {
+          this.getfulfilData()
+          this.getData()
+          this.selectfulfilEvent = []
+        })
+        .catch((data) => {
+          console.log(data);
+        })
+      })
+    },
+    muchDalete () {
+      this.updateAll(this.selectfulfilEvent)
+      .then((id) => {
+        this.$axios.post('/api/deleteFulfilData',{
+          id
+        })
+        .then((data) => {
+          this.$notify({
+            title: data.data.data,
+            type: 'success'
+          })
+        })
+        .then(() => {
+          this.getfulfilData()
+          this.getData()
+          this.selectfulfilEvent = []
+        })
+        .catch((data) => {
+          console.log(data);
+        })
+      })
+    },
+    async updateAll (event) {
+      let todo_id = []
+      await event.map((key) => {
+        todo_id.push(key._id) // 获取多选的id
+      })
+      return todo_id
     },
     //格式化时间
     getNowFormatDate() {

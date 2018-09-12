@@ -104,11 +104,67 @@ let deleteTodoList = async (ctx, next) => {
   })
 }
 
+let updateDatas = async (ctx, next) => {
+  let { id } = ctx.request.body
+  await list.updateDatas(id)
+  .then((data) => {
+    ctx.body = {
+      data,
+      type: 1
+    }
+  })
+  .catch((data) => {
+    ctx.body = {
+      data,
+      type: 0
+    }
+  })
+}
+
+let cancelFulfilData = async  (ctx, next) => {
+  let { id } = ctx.request.body
+  await list.cancelFulfilData(id)
+  .then((data) => {
+    ctx.body = {
+      data,
+      type: 1
+    }
+  })
+  .catch((data) => {
+    ctx.body = {
+      data,
+      type: 0
+    }
+  })
+}
+
+let deleteFulfilData = async  (ctx, next) => {
+  let { id } = ctx.request.body
+  console.log(id);
+  
+  await list.deleteFulfilData(id)
+  .then((data) => {
+    ctx.body = {
+      data,
+      type: 1
+    }
+  })
+  .catch((data) => {
+    ctx.body = {
+      data,
+      type: 0
+    }
+  })
+}
+
 module.exports = {
   addTodoList,
   getTodoList,
   fulfilList,
   getfulfilTodoList,
   cancelTodoList,
-  deleteTodoList
+  deleteTodoList,
+  updateDatas,
+  cancelFulfilData,
+  deleteFulfilData
 }

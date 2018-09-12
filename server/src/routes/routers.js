@@ -26,5 +26,11 @@ router.post('/cancelTodoList', ListController.cancelTodoList) // 撤销完成tod
 
 router.post('/deleteTodoList', ListController.deleteTodoList) // 删除事件
 
+router.post('/updateDatas', ListController.updateDatas) // 多选更新todolist
+
+router.post('/cancelFulfilData', ListController.cancelFulfilData) // 多选撤销todolist
+
+router.post('/deleteFulfilData', ListController.deleteFulfilData)
+
 router.use('/api', router.routes())
 module.exports = router
