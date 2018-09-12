@@ -4,7 +4,7 @@
       <el-col :xs="{span: 20,offset: 2}" :sm="{span: 6,offset: 9}">
         <span>登录TodoList</span>
         <el-input v-model="username" placeholder="请输入账户"></el-input>
-        <el-input v-model="password" placeholder="请输入密码"></el-input>
+        <el-input v-model="password" type="password" placeholder="请输入密码"></el-input>
       </el-col>
     </el-row>
     <el-row>
@@ -57,7 +57,9 @@ import axios from 'axios';
         })
       },
       registry () {
-        this.$router.push('/registry')
+        console.log(11);
+
+        this.$router.push('registry')
       }
     }
   }

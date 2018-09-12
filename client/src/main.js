@@ -46,7 +46,9 @@ Vue.use(DropdownItem)
 
 router.beforeEach((to, from, next) => {
   let token = localStorage.getItem('token') // 获取token
-
+  if (to.name !== 'login' && to.name !== 'todoList') {
+    next()
+  }
   if (to.name == 'login') { // 假如登录 判断token是不是存在 存在让他跳转到主页面
     verification(token, next)
     .then((data) => {

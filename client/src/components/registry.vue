@@ -5,14 +5,14 @@
         <span class="title">注册</span>
 
         <el-row class="row-position">
-          <el-input v-model="username" placeholder="请输入注册的账户"></el-input>
-          <el-alert :title="userErros.username" type="error" :closable="false" v-show="!userErros.userStatus" show-icon></el-alert>
+          <el-input v-model="username" placeholder="请输入注册的账户" @focus="userfocus"></el-input>
+          <el-alert :title="userErros.username" type="error" :closable="false" v-show="!userErros.userStatus && isuserShow" show-icon></el-alert>
           <el-alert :title="userErros.username" type="success" :closable="false" v-show="userErros.userStatus" show-icon></el-alert>
         </el-row>
 
         <el-row class="row-position">
-          <el-input v-model="password" placeholder="请输入注册的密码"></el-input>
-          <el-alert :title="userErros.password" type="error" :closable="false" v-show="!userErros.passStatus" show-icon></el-alert>
+          <el-input v-model="password" type="password" placeholder="请输入注册的密码" @focus="passfocus"></el-input>
+          <el-alert :title="userErros.password" type="error" :closable="false" v-show="!userErros.passStatus && ispassShow" show-icon></el-alert>
           <el-alert :title="userErros.password" type="success" :closable="false" v-show="userErros.passStatus" show-icon></el-alert>
         </el-row>
 
@@ -30,7 +30,9 @@
     data () {
       return {
         username: '',
-        password: ''
+        password: '',
+        isuserShow: false,
+        ispassShow: false
       }
     },
     computed : {
@@ -45,6 +47,7 @@
           username = '通过',
           userStatus = true
         }
+
         if (passLength < 5) {
           password = '密码不可以小于5位',
           passStatus = false
@@ -86,6 +89,12 @@
         .catch((data) => {
           this.$message.error(data.data.data)
         })
+      },
+      userfocus () {
+        this.isuserShow = true
+      },
+      passfocus () {
+        this.ispassShow = true
       }
     }
   }

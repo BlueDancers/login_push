@@ -1,5 +1,16 @@
 <template>
   <div>
+    <div class="header">
+     <el-dropdown trigger="click" @command="handleCommand" >
+        <span class="el-dropdown-link">
+          用户操作<i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="a" @click.native="Logout">注销</el-dropdown-item>
+          <el-dropdown-item command="b" @click.native="registry">注册</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
     <el-row>
       <el-col :xs="{span: 22, offset:2}" :sm="{span: 6, offset: 9}">
         <span class="title">{{ username }} 你好</span>
@@ -132,7 +143,17 @@ export default {
     }
   },
   methods: {
-
+    Logout () { // 注销
+      localStorage.removeItem('token')
+      this.$router.push('/login')
+       this.$message({
+          message: '注销成功',
+          type: 'success'
+        })
+    },
+    registry () {
+      this.$router.push('/registry')
+    },
     handleEdit(index, row) { // 点击完成
       this.$axios.post('/api/fulfilList', {
         id: row._id
@@ -336,6 +357,18 @@ export default {
 </script>
 
 <style scoped>
+.header {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.el-dropdown-link {
+  cursor: pointer;
+  color: #409EFF;
+}
+.el-icon-arrow-down {
+  font-size: 12px;
+}
 .title {
   font-size: 25px;
   line-height: 50px;
