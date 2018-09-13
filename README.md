@@ -1,10 +1,58 @@
 # Vue+Koa2使用jwt实现单点登录
 
-为什么又一次写登录
+对上一个版本的代码很不满意,现在看起来太多地方需要优化,索性重写一个
 
-因为我对上一个版本的代码很不满意,那是刚开始学习koa2写的,现在看起来太多地方需要优化,索性重写一个
-依旧采用 vue + koa + axios + mongdb  登录验证使用jwt
-"# login_push" 
+## (客户端)client:
+
+- vue
+- vue-router
+- axios
+- element
+- jsonwebtoken
+
+## (服务端)server
+
+- koa2
+- koa-bodyparser
+- koa-router
+- md5
+- mongoose
+- pm2
+
+### 实现了什么功能?
+
+- [x] 登录
+- [x] 注册
+- [x] 注销
+- [x] todolist增加 修改 删除 查看
+- [x] todolist多选操作
+- [ ] 对tidolist数量的统计
+
+
+
+### jwt验证模式
+
+![](http://on7r0tqgu.bkt.clouddn.com/FhoQOhymhQA2AKyLZlEeMminHDPH.png )
+
+这里token存储在`localStorage`里面,还有一种做法是存出来cookice里面,代码可能有点变化,但是效果是一模一样的
+
+**login**
+
+![](http://on7r0tqgu.bkt.clouddn.com/FiZIWOPLsjp2-8LqCwZ44Yotl9LU.png)
+
+**registry**
+
+![](http://on7r0tqgu.bkt.clouddn.com/FlPsZhkoQIbWWeTc0MXq3Fmtoi0v.png )
+
+**todolist**
+
+![](http://on7r0tqgu.bkt.clouddn.com/FqcmSDVQbb63idhiolJEmAbPzq-8.png )
+
+![](http://on7r0tqgu.bkt.clouddn.com/Fogd4HkffGZkqPGkU2-T6F1H_Cg1.png )
+
+
+
+
 
 
 > 关于路由控制的思路
