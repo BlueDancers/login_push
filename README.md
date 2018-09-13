@@ -38,7 +38,7 @@
 
 **login**
 
-![](http://on7r0tqgu.bkt.clouddn.com/FiZIWOPLsjp2-8LqCwZ44Yotl9LU.png)
+![](http://on7r0tqgu.bkt.clouddn.com/FiZIWOPLsjp2-8LqCwZ44Yotl9LU.png )
 
 **registry**
 
