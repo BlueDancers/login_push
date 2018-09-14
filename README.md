@@ -32,7 +32,7 @@
 
 ### jwt验证模式
 
-![](http://on7r0tqgu.bkt.clouddn.com/FhoQOhymhQA2AKyLZlEeMminHDPH.png )
+![](http://on7r0tqgu.bkt.clouddn.com/FvoRAnFA_E0WXkGe3gPRA3jR60LS.png)
 
 这里token存储在`localStorage`里面,还有一种做法是存出来cookice里面,代码可能有点变化,但是效果是一模一样的
 
