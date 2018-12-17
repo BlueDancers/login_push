@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header">
-     <el-dropdown trigger="click" @command="handleCommand" >
+     <el-dropdown trigger="click">
         <span class="el-dropdown-link">
           用户操作<i class="el-icon-arrow-down el-icon--right"></i>
         </span>

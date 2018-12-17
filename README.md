@@ -1,6 +1,38 @@
-# Vue+Koa2使用jwt实现单点登录
+# Vue+Koa2使用jwt**实现单点登录**🎁
 
-对上一个版本的代码很不满意,现在看起来太多地方需要优化,索性重写一个
+---
+
+**2018-12-17**
+
+本次更新`README`主要是把挂掉的图连接补上
+
+从我个人角度来说,我还是蛮喜欢这样的全栈项目的,实践性很足,不一定要看我的代码,完全可以直接去写一个类似的todo,虽然页面上看起来很简单,但是存在很多知识点
+
+- jsonwebtoken如何实际运用?
+- 单点登录路由的控制
+- 如何使用`koa2`搭建出一个让自己满意的后台开发环境
+- 了解`mongodb`,完成入门,了解大致api的使用
+- 前端`Vue` `React` 等等 自己喜欢就好,写的多了,自然会越来越熟练
+
+## 怎么运行?
+
+需要环境: npm `安装并启动的mongodb` (环境有问题是肯定启动不起来的)
+
+````bash
+git clone https://github.com/vkcyan/login_push.git
+
+// 服务端
+cd server
+npm install
+npm install start
+
+//客户端
+cd client
+npm install
+npm install start
+````
+
+
 
 ## (客户端)client:
 
@@ -24,31 +56,36 @@
 - [x] 登录
 - [x] 注册
 - [x] 注销
-- [x] todolist增加 修改 删除 查看
+- [x] todolist增加 删除 修改 查看
 - [x] todolist多选操作
-- [ ] 对tidolist数量的统计
 
 
 
 ### jwt验证模式
 
-![](http://on7r0tqgu.bkt.clouddn.com/FvoRAnFA_E0WXkGe3gPRA3jR60LS.png)
+![](http://www.vkcyan.top/Fls3xOB7lVW-lYRqFgbMPkbImnyx.png)
+
+
 
 这里token存储在`localStorage`里面,还有一种做法是存出来cookice里面,代码可能有点变化,但是效果是一模一样的
 
 **login**
 
-![](http://on7r0tqgu.bkt.clouddn.com/FiZIWOPLsjp2-8LqCwZ44Yotl9LU.png )
+![](http://www.vkcyan.top/FnP2Jj9RGJLcIoX88D8kNaHAy0vp.png)
+
+
 
 **registry**
 
-![](http://on7r0tqgu.bkt.clouddn.com/FlPsZhkoQIbWWeTc0MXq3Fmtoi0v.png )
+![](http://www.vkcyan.top/FpDrYpjJ2w7hCYHBldlT895k76cM.png)
 
 **todolist**
 
-![](http://on7r0tqgu.bkt.clouddn.com/FqcmSDVQbb63idhiolJEmAbPzq-8.png )
+![](http://www.vkcyan.top/Fu6GiTnGMcU_CIxuk_WJrdRIUoxC.png)
 
-![](http://on7r0tqgu.bkt.clouddn.com/Fogd4HkffGZkqPGkU2-T6F1H_Cg1.png )
+![](http://www.vkcyan.top/FsOj7-ozk6i-NOjJ1wWB7NlB6lsZ.png)
+
+
 
 
 
